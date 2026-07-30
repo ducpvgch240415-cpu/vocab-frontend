@@ -1,0 +1,217 @@
+.flashcards-page {
+  width: 100%;
+  max-width: 920px;
+  margin: 36px auto;
+  padding: 0 20px;
+}
+
+.flashcards-panel.ui.segment {
+  padding: 30px;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.09);
+}
+
+.page-header.ui.header {
+  margin: 0;
+  font-size: 30px;
+}
+
+.page-header.ui.header > .icon {
+  color: #6435c9;
+}
+
+.page-header .sub.header {
+  margin-top: 7px;
+  font-size: 15px;
+  color: #6b7280;
+}
+
+.keyboard-hint.ui.message {
+  display: flex;
+  align-items: center;
+  margin: 0 0 22px;
+  background: #f8fafc;
+  box-shadow: none;
+  color: #4b5563;
+}
+
+.keyboard-hint > .icon {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.card-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress-row {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.card-number {
+  margin-bottom: 7px;
+  text-align: right;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.card-progress.ui.progress {
+  width: 100%;
+  height: 6px;
+  margin: 0;
+  background: #e5e7eb;
+}
+
+.card-progress.ui.progress .bar {
+  min-width: 0;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.flashcard {
+  width: 100%;
+  height: 310px;
+  perspective: 1200px;
+  cursor: pointer;
+  outline: none;
+}
+
+.flashcard:focus-visible {
+  border-radius: 14px;
+  box-shadow: 0 0 0 3px rgba(33, 133, 208, 0.25);
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.55s ease;
+}
+
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  backface-visibility: hidden;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  background: #faf9ff;
+}
+
+.language-label {
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.language-label .flag {
+  margin: 0;
+}
+
+.word {
+  max-width: 100%;
+  color: #111827;
+  font-size: clamp(30px, 5vw, 48px);
+  font-weight: 700;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.flip-help {
+  position: absolute;
+  bottom: 20px;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.controls,
+.secondary-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.controls {
+  margin-top: 22px;
+}
+
+.secondary-controls {
+  margin-top: 10px;
+}
+
+.controls .ui.button,
+.secondary-controls .ui.button {
+  margin: 0;
+}
+
+.ui.loader {
+  margin: 60px auto;
+}
+
+@media (max-width: 650px) {
+  .flashcards-page {
+    margin: 22px auto;
+    padding: 0 14px;
+  }
+
+  .flashcards-panel.ui.segment {
+    padding: 22px 16px;
+  }
+
+  .page-header.ui.header {
+    font-size: 25px;
+  }
+
+  .flashcard {
+    height: 260px;
+  }
+
+  .word {
+    font-size: 32px;
+  }
+
+  .controls,
+  .secondary-controls {
+    flex-direction: column;
+  }
+
+  .controls .ui.button,
+  .secondary-controls .ui.button {
+    width: 100%;
+  }
+
+  .flip-help {
+    width: calc(100% - 30px);
+    text-align: center;
+  }
+}
