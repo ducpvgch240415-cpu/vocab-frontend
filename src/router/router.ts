@@ -6,6 +6,8 @@ import Edit from '../views/Edit.vue'
 import New from '../views/New.vue'
 import Flashcard from '../views/Flashcard.vue'
 import VocabTest from '../views/VocabTest.vue'
+import Login from '../views/Login.vue';
+import Register from '../views/Register.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -44,6 +46,16 @@ const router = createRouter({
       name: 'edit',
       component: Edit,
     },
+    {
+  path: '/login',
+  name: 'login',
+  component: Login,
+},
+{
+  path: '/register',
+  name: 'register',
+  component: Register,
+},
   ],
 })
 

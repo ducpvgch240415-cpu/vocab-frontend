@@ -1,6 +1,9 @@
  <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useFlash } from './helpers/api';
+import { useRouter } from 'vue-router';
+import { api } from './helpers/api';
+import { isLoggedIn } from './helpers/auth';
 
 defineOptions({
   name: 'App',
@@ -12,6 +15,31 @@ const menuOpen = ref(false);
 const closeMenu = () => {
   menuOpen.value = false;
 };
+
+const router = useRouter();
+
+const logout = async () => {
+  try {
+    await api.post('/api/auth/logout');
+
+    isLoggedIn.value = false;
+
+    closeMenu();
+    router.push('/login');
+  } catch (error) {
+    console.error('Logout failed', error);
+  }
+};
+
+onMounted(async () => {
+  try {
+    const response = await api.get('/api/auth/me');
+
+    isLoggedIn.value = Boolean(response.data?.loggedIn);
+  } catch {
+    isLoggedIn.value = false;
+  }
+});
 </script>
 
 <template>
@@ -76,6 +104,25 @@ const closeMenu = () => {
               <i class="question circle icon"></i>
               Self Test
             </router-link>
+
+           <!-- Show Login when NOT logged in -->
+            <router-link
+                v-if="!isLoggedIn"
+                  to="/login"
+                class="item"
+                  @click="closeMenu">
+            <i class="sign in alternate icon"></i>
+                Login
+            </router-link>
+
+          <!-- Show Logout when logged in -->
+            <div
+              v-else
+                class="item"
+                @click="logout">
+            <i class="sign out alternate icon"></i>
+                Logout
+            </div>
           </div>
         </div>
       </div>
