@@ -5,6 +5,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { deleteWord, getWordById, useFlash } from '../helpers/api';
 import type { Word } from '../components/WordForm.vue';
 import '../assets/show.css';
+import { isLoggedIn } from '../helpers/auth';
 const route = useRoute();
 const router = useRouter();
 const word = ref<Word>({ english: '', german: '', french: '' });
@@ -119,7 +120,7 @@ const onDestroy = async () => {
 
       <div class="ui divider"></div>
 
-      <div class="actions">
+      <div v-if="isLoggedIn" class="actions">
         <router-link
           :to="{ name: 'edit', params: { id: word._id } }"
           class="ui orange labeled icon button"
@@ -136,7 +137,16 @@ const onDestroy = async () => {
           <i class="trash icon"></i>
           Delete Word
         </button>
+        <router-link
+          to="/words"
+          class="ui basic labeled icon button"
+        >
+          <i class="left arrow icon"></i>
+          Back to Main List
+        </router-link>
+</div>
 
+      <div v-else class="actions">
         <router-link
           to="/words"
           class="ui basic labeled icon button"
@@ -145,6 +155,7 @@ const onDestroy = async () => {
           Back to Main List
         </router-link>
       </div>
+      
     </div>
   </div>
 </template>

@@ -79,6 +79,7 @@ onMounted(async () => {
             </router-link>
 
             <router-link
+            v-if="isLoggedIn"
               to="/words/new"
               class="item"
               @click="closeMenu"

@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue';
 import Swal from 'sweetalert2';
 import { deleteWord, getWords, useFlash } from '../helpers/api';
 import type { Word } from '../components/WordForm.vue';
+import { isLoggedIn } from '../helpers/auth';
 
 const words = ref<Word[]>([]);
 const { flash } = useFlash();
@@ -90,7 +91,7 @@ const onDestroy = async (id?: string) => {
               <th>English</th>
               <th>German</th>
               <th>French</th>
-              <th colspan = 3 class = "center aligned">Actions</th>
+              <th :colspan="isLoggedIn ? 3 : 1" class="center aligned">Actions</th>
             </tr>
           </thead>
 
@@ -109,7 +110,7 @@ const onDestroy = async (id?: string) => {
       </router-link>
     </td>
 
-    <td class="action-cell">
+    <td v-if="isLoggedIn" class="action-cell">
       <router-link
         :to="{ name: 'edit', params: { id: word._id } }"
         class="ui orange icon button"
@@ -118,7 +119,7 @@ const onDestroy = async (id?: string) => {
       </router-link>
     </td>
 
-    <td class="action-cell">
+    <td v-if="isLoggedIn" class="action-cell">
       <button
         @click="onDestroy(word._id)"
         class="ui red icon button"
