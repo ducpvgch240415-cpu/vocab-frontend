@@ -5,6 +5,7 @@ export interface Word {
   _id?: string;
   english: string;
   german: string;
+  french: string;
 }
 
 const props = withDefaults(
@@ -14,7 +15,8 @@ const props = withDefaults(
   {
     word: () => ({
       english: '',
-      german: ''
+      german: '',
+      french: ''
     })
   }
 );
@@ -38,8 +40,9 @@ watch(
 const onSubmit = () => {
   const english = localWord.value.english.trim();
   const german = localWord.value.german.trim();
+  const french = localWord.value.french.trim();
 
-  if (!english || !german) {
+  if (!english || !german || !french) {
     errorsPresent.value = true;
     return;
   }
@@ -49,7 +52,8 @@ const onSubmit = () => {
   emit('createOrUpdate', {
     ...localWord.value,
     english,
-    german
+    german,
+    french,
   });
 };
 </script>
@@ -68,7 +72,7 @@ const onSubmit = () => {
           Missing information
         </div>
 
-        <p>Both English and German fields are required.</p>
+        <p>Both English and German and French fields are required.</p>
       </div>
 
       <div
@@ -107,6 +111,27 @@ const onSubmit = () => {
             v-model="localWord.german"
             type="text"
             placeholder="Enter German translation"
+            autocomplete="off"
+            @input="errorsPresent = false"
+          />
+
+          <i class="translate icon"></i>
+        </div>
+</div>
+        <div
+        class="field"
+        :class="{
+          error: errorsPresent && !localWord.french.trim()
+        }"
+      >
+        <label for="french-word">French</label>
+
+        <div class="ui left icon input">
+          <input
+            id="french-word"
+            v-model="localWord.french"
+            type="text"
+            placeholder="Enter French translation"
             autocomplete="off"
             @input="errorsPresent = false"
           />

@@ -1,8 +1,25 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { flashcard } from '../composable/flashcard';
 
-const { cards, index, flipped, loading, error, toggle, next, prev, shuffle, fetchWords } = flashcard();
+const {
+  cards,
+  index,
+  flipped,
+  loading,
+  error,
+  selectedPair,
+  pairOptions,
+  toggle,
+  next,
+  prev,
+  shuffle,
+  fetchWords,
+  setPair,
+  getCardPair,
+} = flashcard();
 
+const currentCardPair = computed(() => getCardPair(cards.value[index.value] ?? null));
 </script>
 
 <template>
@@ -15,7 +32,7 @@ const { cards, index, flipped, loading, error, toggle, next, prev, shuffle, fetc
           Flashcards
 
           <div class="sub header">
-            Review your English and German vocabulary
+            Review your vocabulary across language pairs
           </div>
         </div>
       </div>
@@ -29,6 +46,16 @@ const { cards, index, flipped, loading, error, toggle, next, prev, shuffle, fetc
           <strong>Keyboard:</strong>
           ← previous, → next, Space or F flip, R shuffle
         </div>
+      </div>
+
+      <div class="field pair-selector-field">
+        <label for="flashcard-pair">Practice pair</label>
+
+        <select id="flashcard-pair" class="ui dropdown" v-model="selectedPair" @change="setPair(selectedPair)">
+          <option v-for="option in pairOptions" :key="option.value" :value="option.value">
+            {{ option.label }}
+          </option>
+        </select>
       </div>
 
       <div v-if="loading" class="ui active centered inline loader"></div>
@@ -79,33 +106,37 @@ const { cards, index, flipped, loading, error, toggle, next, prev, shuffle, fetc
           <div class="card-inner" :class="{ flipped }">
             <div class="card-face card-front">
               <div class="language-label">
-                <i class="uk flag"></i>
-                English
+                <i
+                  :class="currentCardPair.frontLabel === 'English' ? 'uk flag' : currentCardPair.frontLabel === 'German' ? 'germany flag' : 'france flag'"
+                ></i>
+                {{ currentCardPair.frontLabel }}
               </div>
 
               <div class="word">
-                {{ cards[index]?.english ?? '' }}
+                {{ flipped ? currentCardPair.backValue : currentCardPair.frontValue }}
               </div>
 
               <div class="flip-help">
                 <i class="sync alternate icon"></i>
-                Click to show the German word
+                Click to show the {{ currentCardPair.backLabel }} word
               </div>
             </div>
 
             <div class="card-face card-back">
               <div class="language-label">
-                <i class="germany flag"></i>
-                German
+                <i
+                  :class="currentCardPair.backLabel === 'English' ? 'uk flag' : currentCardPair.backLabel === 'German' ? 'germany flag' : 'france flag'"
+                ></i>
+                {{ currentCardPair.backLabel }}
               </div>
 
               <div class="word">
-                {{ cards[index]?.german ?? '' }}
+                {{ currentCardPair.backValue }}
               </div>
 
               <div class="flip-help">
                 <i class="sync alternate icon"></i>
-                Click to show the English word
+                Click to show the {{ currentCardPair.frontLabel }} word
               </div>
             </div>
           </div>

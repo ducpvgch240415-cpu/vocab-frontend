@@ -7,7 +7,7 @@ import type { Word } from '../components/WordForm.vue';
 import '../assets/show.css';
 const route = useRoute();
 const router = useRouter();
-const word = ref<Word>({ english: '', german: '' });
+const word = ref<Word>({ english: '', german: '', french: '' });
 const { flash } = useFlash();
 
 onMounted(async () => {
@@ -100,6 +100,18 @@ const onDestroy = async () => {
             <div class="detail-label">German Word</div>
             <div class="detail-value">
               {{ word.german }}
+            </div>
+          </div>
+</div>
+          <div class="detail-row">
+          <div class="detail-icon">
+            <i class="france flag"></i>
+          </div>
+          
+          <div class="detail-content">
+            <div class="detail-label">French Word</div>
+            <div class="detail-value">
+              {{ word.french }}
             </div>
           </div>
         </div>

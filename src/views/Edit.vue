@@ -8,7 +8,7 @@ const router = useRouter();
 const route = useRoute();
 const { flash } = useFlash();
 
-const word = ref<Word>({ english: '', german: '' });
+const word = ref<Word>({ english: '', german: '', french: '' });
 
 onMounted(async () => {
   const id = route.params.id as string;
@@ -37,7 +37,7 @@ const createOrUpdate = async (updatedWord: Word) => {
           Edit Word
 
           <div class="sub header">
-            Update the English and German vocabulary values
+            Update the English and German and French vocabulary values
           </div>
         </div>
       </div>

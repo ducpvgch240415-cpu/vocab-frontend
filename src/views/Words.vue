@@ -89,6 +89,7 @@ const onDestroy = async (id?: string) => {
             <tr>
               <th>English</th>
               <th>German</th>
+              <th>French</th>
               <th colspan = 3 class = "center aligned">Actions</th>
             </tr>
           </thead>
@@ -97,6 +98,7 @@ const onDestroy = async (id?: string) => {
   <tr v-for="word in paginatedWords" :key="word._id">
     <td>{{ word.english }}</td>
     <td>{{ word.german }}</td>
+    <td>{{ word.french }}</td>
 
     <td class="action-cell">
       <router-link

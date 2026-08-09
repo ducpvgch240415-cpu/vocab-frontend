@@ -1,11 +1,33 @@
 <script setup lang="ts">
 import { useVocabTest } from '../composable/useVocabTest';
 
-const {cards, loading, error, questionCount, timerSeconds, fullTest, timerOptions, quizActive, quizFinished,
-  quizQuestions, quizQuestionIndex, selectedOption, remainingTime, currentQuestion, score, quizDuration, startQuiz,
-  handleAnswer, skipQuestion, resetQuiz, formatDuration, fetchWords
+const {
+  cards,
+  loading,
+  error,
+  questionCount,
+  timerSeconds,
+  fullTest,
+  timerOptions,
+  selectedPair,
+  pairOptions,
+  quizActive,
+  quizFinished,
+  quizQuestions,
+  quizQuestionIndex,
+  selectedOption,
+  remainingTime,
+  currentQuestion,
+  score,
+  quizDuration,
+  startQuiz,
+  handleAnswer,
+  skipQuestion,
+  resetQuiz,
+  formatDuration,
+  fetchWords,
+  setPair,
 } = useVocabTest();
-
 </script>
 
 <template>
@@ -18,7 +40,7 @@ const {cards, loading, error, questionCount, timerSeconds, fullTest, timerOption
           Self Test
 
           <div class="sub header">
-            Test your vocabulary and review your results
+            Test your vocabulary across different language pairs
           </div>
         </div>
       </div>
@@ -49,7 +71,6 @@ const {cards, loading, error, questionCount, timerSeconds, fullTest, timerOption
       </div>
 
       <section v-else class="quiz-wrap">
-        <!-- Quiz setup -->
         <div
           v-if="!quizActive && !quizFinished"
           class="quiz-section quiz-setup"
@@ -62,12 +83,22 @@ const {cards, loading, error, questionCount, timerSeconds, fullTest, timerOption
             <div>
               <h2>Practice Quiz</h2>
               <p>
-                Select the number of questions and the total test time.
+                Choose a vocabulary pair, number of questions, and the test duration.
               </p>
             </div>
           </div>
 
           <form class="ui form" @submit.prevent="startQuiz">
+            <div class="field">
+              <label>Vocabulary pair</label>
+
+              <select v-model="selectedPair" class="ui dropdown" @change="setPair(selectedPair)">
+                <option v-for="option in pairOptions" :key="option.value" :value="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+            </div>
+
             <div class="field">
               <label>Number of questions</label>
 
@@ -155,7 +186,6 @@ const {cards, loading, error, questionCount, timerSeconds, fullTest, timerOption
           </form>
         </div>
 
-        <!-- Active question -->
         <div
           v-else-if="quizActive && currentQuestion"
           class="quiz-section quiz-question"
@@ -272,7 +302,6 @@ const {cards, loading, error, questionCount, timerSeconds, fullTest, timerOption
           </div>
         </div>
 
-        <!-- Results -->
         <div v-else class="quiz-section quiz-results">
           <div class="results-header">
             <div
