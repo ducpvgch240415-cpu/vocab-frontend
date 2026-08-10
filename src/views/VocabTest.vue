@@ -125,7 +125,7 @@ const {
                 />
 
                 <label for="full-test">
-                  Test every word in the database
+                  Test every word
                 </label>
               </div>
             </div>
